@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Массажный салон 💆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f7f4;
+            color: #2d4a3e;
+            padding-bottom: 80px;
+        }
+
+        /* БАННЕР */
+        .banner {
+            background: #2d7a5a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ШАПКА */
+        .navbar {
+            background: white;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+        .logo {
+            font-size: 17px;
+            font-weight: 700;
+            color: #2d7a5a;
+        }
+        .burger {
+            font-size: 26px;
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            color: #2d4a3e;
+        }
+        .burger:active {
+            transform: scale(0.92);
+        }
+
+        .nav-links {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            margin-top: 8px;
+        }
+        .nav-links.open {
+            display: flex;
+        }
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f8f6fc;
+            text-align: center;
+            display: block;
+            cursor: pointer;
+        }
+        .nav-links a.active {
+            background: #2d7a5a;
+            color: white;
+        }
+        .nav-links .cart-link {
+            background: #2d7a5a;
+            color: white;
+        }
+        .cart-count {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border-radius: 50%;
+            padding: 1px 8px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* СТРАНИЦЫ */
+        .page {
+            display: none;
+            padding: 16px 14px 60px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .page.active {
+            display: block;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d4a3e;
+            margin-bottom: 4px;
+        }
+        .page-title .accent {
+            color: #2d7a5a;
+        }
+        .page-subtitle {
+            color: #7a9a8e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* КНОПКИ */
+        .btn {
+            display: inline-block;
+            padding: 14px 20px;
+            background: #2d7a5a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            min-height: 48px;
+            width: 100%;
+        }
+        .btn:active {
+            transform: scale(0.96);
+            background: #236a4e;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #2d7a5a;
+            color: #2d7a5a;
+        }
+        .btn-outline:active {
+            background: #2d7a5a;
+            color: white;
+        }
+        .btn-danger {
+            background: #e17055 !important;
+        }
+        .btn-success {
+            background: #27ae60 !important;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* ГЛАВНАЯ */
+        .hero {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .hero h1 {
+            font-size: 26px;
+            color: #2d4a3e;
+            line-height: 1.3;
+        }
+        .hero h1 .highlight {
+            color: #2d7a5a;
+        }
+        .hero p {
+            font-size: 15px;
+            color: #5a7a6e;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        .hero .guarantee {
+            background: #eaf5f0;
+            border-left: 4px solid #2d7a5a;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        .hero .guarantee .big {
+            font-weight: 700;
+            color: #2d7a5a;
+            font-size: 17px;
+        }
+        .hero .guarantee .small {
+            color: #5a7a6e;
+            font-size: 14px;
+        }
+        .hero-image {
+            font-size: 70px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px 0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .feature {
+            text-align: center;
+            padding: 15px 10px;
+            background: white;
+            border-radius: 14px;
+        }
+        .feature .icon {
+            font-size: 28px;
+        }
+        .feature h4 {
+            font-size: 13px;
+            color: #2d4a3e;
+        }
+        .feature p {
+            font-size: 11px;
+            color: #7a9a8e;
+        }
+
+        .discount-banner {
+            background: linear-gradient(135deg, #7eb89e, #5ca88a);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 14px;
+            margin: 20px 0 0;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        /* УСЛУГИ */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid rgba(126, 184, 158, 0.08);
+        }
+        .service-card .icon {
+            font-size: 34px;
+        }
+        .service-card h3 {
+            font-size: 17px;
+            color: #2d4a3e;
+            margin: 6px 0;
+        }
+        .service-card .desc {
+            font-size: 13px;
+            color: #7a9a8e;
+            margin-bottom: 10px;
+        }
+        .service-card .price {
+            font-size: 17px;
+            font-weight: 700;
+            color: #2d7a5a;
+            margin-bottom: 10px;
+        }
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            background: #2d7a5a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+        }
+        .btn-add:active {
+            transform: scale(0.96);
+            background: #236a4e;
+        }
+        .btn-added {
+            background: #27ae60;
+            cursor: default;
+        }
+        .btn-added:active {
+            transform: none;
+        }
+
+        /* КОРЗИНА */
+        .cart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cart-item-remove {
+            background: none;
+            color: #e17055;
+            border: 1px solid rgba(225, 112, 85, 0.2);
+            border-radius: 10px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .cart-item-remove:active {
+            background: #e17055;
+            color: white;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            font-size: 19px;
+            font-weight: 700;
+            border-top: 2px solid #eee;
+        }
+        .cart-empty {
+            text-align: center;
+            padding: 30px 0;
+            color: #7a9a8e;
+        }
+        .btn-order {
+            width: 100%;
+            padding: 14px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 50px;
+        }
+        .btn-order:active {
+            transform: scale(0.96);
+        }
+
+        /* ПРОФИЛЬ */
+        .profile-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        .profile-container .avatar {
+            font-size: 56px;
+        }
+        .profile-container h2 {
+            font-size: 20px;
+            color: #2d4a3e;
+        }
+        .profile-container .email {
+            color: #7a9a8e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .profile-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .profile-field .label {
+            color: #7a9a8e;
+        }
+        .profile-field .value {
+            font-weight: 600;
+        }
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .profile-actions .btn-small {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 44px;
+        }
+        .profile-actions .btn-small:active {
+            transform: scale(0.95);
+        }
+        .btn-edit {
+            background: #f39c12;
+            color: white;
+        }
+        .btn-logout {
+            background: #e17055;
+            color: white;
+        }
+        .btn-admin {
+            background: #2d7a5a;
+            color: white;
+        }
+
+        .login-form {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+        }
+        .login-form h3 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 15px;
+            min-height: 48px;
+            background: #f0f7f4;
+        }
+        .login-form input:focus {
+            outline: none;
+            border-color: #2d7a5a;
+        }
+        .login-form .btn {
+            width: 100%;
+        }
+        .login-form .register-link {
+            text-align: center;
+            margin-top: 12px;
+            color: #7a9a8e;
+            font-size: 14px;
+        }
+
+        /* КАЛЕНДАРЬ */
+        .calendar-container {
+            max-width: 100%;
+            margin: 0 auto 16px;
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .calendar-header .month-year {
+            font-size: 17px;
+            font-weight: 700;
+        }
+        .calendar-header .nav-btn {
+            background: #eaf5f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .calendar-header .nav-btn:active {
+            background: #2d7a5a;
+            color: white;
+            transform: scale(0.92);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+        }
+        .calendar-grid .day-name {
+            text-align: center;
+            font-weight: 600;
+            color: #9ab8ac;
+            font-size: 10px;
+            padding: 6px 0;
+        }
+        .calendar-grid .day {
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            background: #f0f7f4;
+            border: 2px solid transparent;
+            font-size: 13px;
+            min-height: 38px;
+        }
+        .calendar-grid .day:active:not(.empty):not(.occupied) {
+            transform: scale(0.92);
+        }
+        .calendar-grid .day.free {
+            background: #dcefe7;
+            color: #2d7a5a;
+        }
+        .calendar-grid .day.occupied {
+            background: #fce4ec;
+            color: #e17055;
+            cursor: not-allowed;
+        }
+        .calendar-grid .day.selected {
+            border-color: #2d7a5a;
+            background: #2d7a5a;
+            color: white;
+            transform: scale(1.05);
+        }
+        .calendar-grid .day.empty {
+            background: transparent;
+            cursor: default;
+        }
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 11px;
+            color: #5a7a6e;
+            flex-wrap: wrap;
+        }
+        .calendar-legend .color-box {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        .color-box.free {
+            background: #dcefe7;
+            border: 1px solid #2d7a5a;
+        }
+        .color-box.occupied {
+            background: #fce4ec;
+            border: 1px solid #e17055;
+        }
+        .color-box.selected {
+            background: #2d7a5a;
+        }
+        .calendar-time {
+            text-align: center;
+            margin-top: 12px;
+            padding: 10px;
+            background: #f0f7f4;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+        .calendar-time span {
+            font-weight: 700;
+            color: #2d7a5a;
+        }
+
+        /* АДМИН */
+        .admin-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+        .admin-panel h3 {
+            font-size: 18px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .admin-form input,
+        .admin-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 14px;
+            background: #f0f7f4;
+            min-height: 44px;
+        }
+        .admin-form input:focus,
+        .admin-form textarea:focus {
+            outline: none;
+            border-color: #2d7a5a;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .admin-table th {
+            background: #f0f7f4;
+            text-align: left;
+            padding: 8px 10px;
+        }
+        .admin-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .admin-orders-list .order-item {
+            background: #f8fbf9;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-left: 4px solid #2d7a5a;
+        }
+
+        /* МОДАЛКА */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 460px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            color: #2d7a5a;
+            font-size: 20px;
+        }
+        .modal-content .order-code {
+            background: #2d4a3e;
+            color: #7eb89e;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .modal-content .order-text {
+            background: #f0f7f4;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 180px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+        }
+        .modal-content .btn-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .modal-content .btn-group .btn {
+            flex: 1;
+            min-width: 60px;
+            text-align: center;
+            padding: 10px 12px;
+            font-size: 12px;
+            min-height: 40px;
+        }
+        .btn-copy {
+            background: #6c5ce7 !important;
+        }
+        .btn-telegram {
+            background: #0088cc !important;
+        }
+        .btn-email {
+            background: #e17055 !important;
+        }
+        .btn-write {
+            background: #f39c12 !important;
+        }
+        .btn-close-modal {
+            background: #636e72 !important;
+        }
+        .modal-content .divider {
+            text-align: center;
+            color: #9ab8ac;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d4a3e;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 14px;
+            z-index: 9999;
+            max-width: 90%;
+            text-align: center;
+            font-size: 13px;
+        }
+        .toast.success {
+            border-left: 4px solid #27ae60;
+        }
+        .toast.error {
+            border-left: 4px solid #e17055;
+        }
+
+        /* АССИСТЕНТ */
+        .assistant-fixed {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 999;
+        }
+        .assistant-fixed button {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #2d7a5a;
+            color: white;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(45, 122, 90, 0.3);
+        }
+        .assistant-fixed button:active {
+            transform: scale(0.92);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 16px;
+            color: #9ab8ac;
+            font-size: 11px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+            background: white;
+        }
+
+        #bookBtn {
+            display: none;
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .loading-overlay.show {
+            display: flex;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #2d7a5a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .loading-overlay p {
+            color: white;
+            font-size: 15px;
+        }
+
+        .quick-btn {
+            padding: 4px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background: white;
+            font-size: 11px;
+            cursor: pointer;
+            color: #2d4a3e;
+        }
+        .quick-btn:active {
+            border-color: #2d7a5a;
+            background: #eaf5f0;
+            transform: scale(0.95);
+        }
+
+        @media (min-width: 600px) {
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .btn-group {
+                flex-direction: row;
+            }
+            .btn {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner">🌸 ТОЛЬКО ДЛЯ ЖЕНЩИН 🌸</div>
+
+    <nav class="navbar">
+        <div class="logo">💆 МассажныйСалон</div>
+        <button class="burger" onclick="toggleMenu()">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="#" onclick="showPage('home')" class="active" id="navHome">Главная</a>
+            <a href="#" onclick="showPage('services')" id="navServices">Услуги</a>
+            <a href="#" onclick="showPage('cart')" class="cart-link" id="navCart">🛒 Корзина <span class="cart-count" id="cartCount">0</span></a>
+            <a href="#" onclick="showPage('booking')" id="navBooking">📅 Бронирование</a>
+            <a href="#" onclick="showPage('profile')" id="navProfile">👤 Профиль</a>
+            <a href="#" onclick="showPage('admin')" id="adminNavLink" style="display:none;" class="admin-link">🔐 Админ</a>
+        </div>
+    </nav>
+
+    <!-- ГЛАВНАЯ -->
+    <div class="page active" id="page-home">
+        <div class="hero">
+            <h1>Массаж для <span class="highlight">релакса</span> и здоровья 🌸</h1>
+            <p>Погрузитесь в мир гармонии и спокойствия. Наши процедуры помогут вам снять напряжение и обрести внутренний баланс.</p>
+            <div class="guarantee">
+                <div class="big">💯 100% релакс и спокойствие</div>
+                <div class="small">Мы гарантируем, что после сеанса вы почувствуете лёгкость и умиротворение.</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="showPage('services')">✨ Выбрать услугу</button>
+                <button class="btn btn-outline" onclick="showPage('booking')">📅 Забронировать</button>
+            </div>
+            <div class="hero-image">💆‍♀️</div>
+        </div>
+        <div class="features">
+            <div class="feature"><span class="icon">🌸</span><h4>Полный релакс</h4><p>Забудьте о стрессе</p></div>
+            <div class="feature"><span class="icon">✨</span><h4>Премиальная косметика</h4><p>Фитомер, Фитосиан, Бруновассари</p></div>
+            <div class="feature"><span class="icon">⭐</span><h4>Гарантия результата</h4><p>100% удовольствие</p></div>
+        </div>
+        <div class="discount-banner">🎁 ПЕРВЫМ КЛИЕНТАМ СКИДКА 20%</div>
+    </div>
+
+    <!-- УСЛУГИ -->
+    <div class="page" id="page-services">
+        <h2 class="page-title">Наши <span class="accent">услуги</span> 💆</h2>
+        <p class="page-subtitle">Выберите массаж, который подходит именно вам</p>
+        <div class="services-grid" id="servicesGrid"></div>
+    </div>
+
+    <!-- КОРЗИНА -->
+    <div class="page" id="page-cart">
+        <h2 class="page-title">Моя <span class="accent">корзина</span> 🛒</h2>
+        <p class="page-subtitle">Услуги, которые вы выбрали</p>
+        <div class="cart-container"><div id="cartItems"></div><div id="cartTotal"></div></div>
+    </div>
+
+    <!-- БРОНИРОВАНИЕ -->
+    <div class="page" id="page-booking">
+        <h2 class="page-title">📅 <span class="accent">Бронирование</span></h2>
+        <p class="page-subtitle">Выберите свободный день для массажа</p>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="nav-btn" onclick="changeMonth(-1)">◀</button>
+                <span class="month-year" id="monthYear">Июнь 2026</span>
+                <button class="nav-btn" onclick="changeMonth(1)">▶</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="calendar-legend">
+                <span class="legend-item"><span class="color-box free"></span> Свободно</span>
+                <span class="legend-item"><span class="color-box occupied"></span> Занято</span>
+                <span class="legend-item"><span class="color-box selected"></span> Выбрано</span>
+            </div>
+            <div class="calendar-time">🕐 Время работы: <span>10:00 — 17:00</span></div>
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+            <p id="selectedDateDisplay" style="color:#5a7a6e;">Выберите дату</p>
+            <button class="btn" id="bookBtn" style="display:none;margin-top:10px;" onclick="bookSelectedDate()">📩 Забронировать</button>
+        </div>
+    </div>
+
+    <!-- ПРОФИЛЬ -->
+    <div class="page" id="page-profile">
+        <h2 class="page-title">👤 Мой <span class="accent">профиль</span></h2>
+        <p class="page-subtitle">Управляйте своими данными</p>
+        <div id="profileContent"></div>
+    </div>
+
+    <!-- АДМИН -->
+    <div class="page" id="page-admin">
+        <h2 class="page-title">🔐 <span class="accent">Администрирование</span></h2>
+        <p class="page-subtitle">Управление услугами, заказами и датами</p>
+        <div class="admin-panel">
+            <h3>📋 Управление услугами</h3>
+            <div class="admin-form">
+                <input type="text" id="adminServiceName" placeholder="Название услуги">
+                <input type="text" id="adminServiceIcon" placeholder="Иконка (💆)" style="max-width:80px;">
+                <input type="text" id="adminServiceDuration" placeholder="Длительность (60 мин)">
+                <input type="number" id="adminServicePrice" placeholder="Цена (число)" step="100">
+                <textarea id="adminServiceDesc" placeholder="Описание" rows="2"></textarea>
+                <button class="btn btn-success" onclick="addService()">➕ Добавить услугу</button>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="admin-table">
+                    <thead><tr><th>Название</th><th>Цена</th><th>Действия</th></tr></thead>
+                    <tbody id="adminServicesBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="admin-panel">
+            <h3>📦 Заказы</h3>
+            <div class="admin-orders-list" id="adminOrdersList"><p style="color:#7a9a8e;">Заказов пока нет</p></div>
+        </div>
+        <div class="admin-panel">
+            <h3>🗓️ Управление датами</h3>
+            <button class="btn btn-danger" onclick="clearDates()">🗑️ Очистить занятые даты</button>
+            <p style="margin-top:10px;color:#5a7a6e;font-size:14px;">Занятых дней: <span id="adminOccupiedCount">0</span></p>
+        </div>
+    </div>
+
+    <!-- МОДАЛКИ -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <h2>✅ Заказ оформлен!</h2>
+            <p class="sub">Ваш уникальный код заказа</p>
+            <div class="order-code" id="orderCode">MS-2026-001</div>
+            <div class="order-text" id="orderText"></div>
+            <button class="btn btn-write" onclick="writeToAdmin()" style="width:100%;margin-bottom:10px;">💬 Написать администратору</button>
+            <div class="divider">📨 Отправить</div>
+            <div class="btn-group">
+                <button class="btn btn-copy" onclick="copyOrder()">📋 Копировать</button>
+                <button class="btn btn-telegram" onclick="sendToTelegram()">📨 Telegram</button>
+                <button class="btn btn-email" onclick="sendToEmail()">📧 Почта</button>
+            </div>
+            <div style="margin-top:10px;"><button class="btn btn-close-modal" onclick="closeModal()" style="width:100%;">✕ Закрыть</button></div>
+        </div>
+    </div>
+
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content" style="max-width:380px;">
+            <h2 style="color:#2d7a5a;">🔐 Вход для администратора</h2>
+            <p class="sub">Введите пароль для доступа к панели управления</p>
+            <input type="password" id="adminPasswordInput" placeholder="Введите пароль" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:15px;min-height:48px;background:#f0f7f4;margin-bottom:14px;">
+            <button class="btn" onclick="adminLogin()" style="width:100%;">Войти</button>
+            <button class="btn btn-outline" onclick="closeAdminLogin()" style="width:100%;margin-top:8px;">Отмена</button>
+        </div>
+    </div>
+
+    <div class="modal" id="assistantModal" style="z-index:1000;">
+        <div class="modal-content" style="max-width:380px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 style="color:#2d7a5a;">🤖 Ассистент</h3>
+                <button onclick="closeAssistant()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#7a9a8e;">✕</button>
+            </div>
+            <div id="assistantMessages" style="max-height:250px;overflow-y:auto;background:#f0f7f4;border-radius:12px;padding:14px;margin-bottom:10px;">
+                <div style="background:white;padding:10px 14px;border-radius:12px;margin-bottom:8px;font-size:14px;">Привет! 👋 Я консультант по массажу. Задайте вопрос!</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">
+                <button class="quick-btn" onclick="sendQuickMsg('Какой массаж выбрать для расслабления?')">🧘 Релакс</button>
+                <button class="quick-btn" onclick="sendQuickMsg('Какие противопоказания у массажа?')">⚠️ Противопоказания</button>
+                <button class="quick-btn" onclick="sendQuickMsg('Как часто нужно делать массаж?')">📅 Частота</button>
+                <button class="quick-btn" onclick="sendQuickMsg('Что лучше: классический или тайский?')">🤔 Сравнение</button>
+            </div>
+            <div style="display:flex;gap:6px;">
+                <input type="text" id="assistantInput" placeholder="Спросите о массаже..." style="flex:1;padding:12px;border:1px solid #ddd;border-radius:25px;font-size:14px;min-height:42px;background:#f0f7f4;outline:none;">
+                <button onclick="sendAssistantMsg()" style="padding:12px 20px;background:#2d7a5a;color:white;border:none;border-radius:25px;font-size:14px;font-weight:600;cursor:pointer;min-height:42px;">Отправить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="assistant-fixed"><button onclick="toggleAssistant()">🤖</button></div>
+
+    <div class="footer">© 2024 Массажный салон · Сделано с ❤</div>
+
+    <div class="loading-overlay" id="loadingOverlay"><div class="loading-spinner"></div><p>⏳ Отправляем заказ...</p></div>
+
+    <script>
+        // ============================================================
+        // ДАННЫЕ
+        // ============================================================
+        var defaultServices = [
+            { id: 1, icon: '💆', name: 'Классический массаж', desc: 'Расслабляющий массаж всего тела.', price: null,
+                duration: '60 мин' },
+            { id: 2, icon: '🧖', name: 'SPA-массаж', desc: 'Массаж с ароматическими маслами.', price: null,
+                duration: '90 мин' },
+            { id: 3, icon: '🦶', name: 'Массаж стоп', desc: 'Точечный массаж стоп.', price: null, duration: '30 мин' },
+            { id: 4, icon: '💪', name: 'Спортивный массаж', desc: 'Восстановительный массаж для мышц.', price: null,
+                duration: '60 мин' },
+            { id: 5, icon: '🕯️', name: 'Ароматерапия', desc: 'Массаж с эфирными маслами.', price: null,
+                duration: '60 мин' },
+            { id: 6, icon: '🧘', name: 'Тайский массаж', desc: 'Древняя техника массажа.', price: null,
+            duration: '90 мин' }
+        ];
+
+        function loadServices() {
+            try { var stored = localStorage.getItem('massageServices'); if (stored) { var parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length) return parsed; } } catch (e) {}
+            localStorage.setItem('massageServices', JSON.stringify(defaultServices));
+            return defaultServices;
+        }
+
+        function saveServices(s) { localStorage.setItem('massageServices', JSON.stringify(s)); }
+
+        var servicesData = loadServices();
+        var nextId = servicesData.reduce(function(max, s) { return Math.max(max, s.id); }, 0) + 1;
+
+        function loadOrders() { try { return JSON.parse(localStorage.getItem('massageOrders')) || []; } catch (e) { return []; } }
+
+        function saveOrders(o) { localStorage.setItem('massageOrders', JSON.stringify(o)); }
+        var orders = loadOrders();
+
+        function getOccupiedDates() { try { return JSON.parse(localStorage.getItem('occupiedDates')) || []; } catch (e) { return []; } }
+
+        function saveOccupiedDates(d) { localStorage.setItem('occupiedDates', JSON.stringify(d)); }
+
+        function markDateOccupied(dateStr) { var dates = getOccupiedDates(); if (dates.indexOf(dateStr) === -1) { dates.push(
+                    dateStr);
+                saveOccupiedDates(dates); } }
+
+        function isDateOccupied(dateStr) { return getOccupiedDates().indexOf(dateStr) !== -1; }
+
+        var orderCounter = parseInt(localStorage.getItem('orderCounter')) || 0;
+        var currentMonth = new Date().getMonth();
+        var currentYear = new Date().getFullYear();
+        var selectedDate = null;
+        var currentOrderText = '';
+        var currentOrderCode = '';
+
+        var ADMIN_PASSWORD = 'MIswaco20@';
+        var ADMIN_EMAIL = 'iliya2712@bk.ru';
+        var TELEGRAM_USERNAME = '@error_0001';
+
+        var isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+        // ============================================================
+        // НАВИГАЦИЯ
+        // ============================================================
+        function showPage(page) {
+            var pages = document.querySelectorAll('.page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+            var target = document.getElementById('page-' + page);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            var links = document.querySelectorAll('.nav-links a');
+            for (var j = 0; j < links.length; j++) {
+                links[j].classList.remove('active');
+            }
+
+            var navMap = {
+                'home': 'navHome',
+                'services': 'navServices',
+                'cart': 'navCart',
+                'booking': 'navBooking',
+                'profile': 'navProfile',
+                'admin': 'adminNavLink'
+            };
+            if (navMap[page]) {
+                var activeLink = document.getElementById(navMap[page]);
+                if (activeLink) activeLink.classList.add('active');
+            }
+
+            document.getElementById('navLinks').classList.remove('open');
+
+            if (page === 'services') renderServices();
+            if (page === 'cart') updateCartUI();
+            if (page === 'booking') renderCalendar(currentMonth, currentYear);
+            if (page === 'profile') renderProfile();
+            if (page === 'admin') renderAdminPanel();
+
+            var adminLink = document.getElementById('adminNavLink');
+            if (adminLink) {
+                adminLink.style.display = isAdmin ? 'block' : 'none';
+            }
+        }
+
+        // ============================================================
+        // МЕНЮ
+        // ============================================================
+        function toggleMenu() {
+            var menu = document.getElementById('navLinks');
+            menu.classList.toggle('open');
+        }
+
+        // ============================================================
+        // КОРЗИНА
+        // ============================================================
+        function getCart() {
+            try { return JSON.parse(localStorage.getItem('massageCart')) || []; } catch (e) { return []; }
+        }
+
+        function saveCart(c) { localStorage.setItem('massageCart', JSON.stringify(c));
+            updateCartCount(); }
+
+        function addToCart(id) {
+            var cart = getCart();
+            if (cart.indexOf(id) !== -1) { showToast('Уже в корзине!', 'error'); return; }
+            cart.push(id);
+            saveCart(cart);
+            updateCartUI();
+            showToast('✅ Добавлено!', 'success');
+        }
+
+        function removeFromCart(id) {
+            var cart = getCart();
+            var newCart = cart.filter(function(i) { return i !== id; });
+            saveCart(newCart);
+            updateCartUI();
+            showToast('🗑️ Удалено', 'error');
+        }
+
+        function getCartItems() {
+            var cart = getCart();
+            return cart.map(function(id) { return servicesData.find(function(s) { return s.id === id; }); }).filter(Boolean);
+        }
+
+        function getCartTotal() {
+            return getCartItems().reduce(function(sum, item) { return sum + (item.price || 0); }, 0);
+        }
+
+        function updateCartCount() {
+            var el = document.getElementById('cartCount');
+            if (el) el.textContent = getCart().length;
+        }
+
+        // ============================================================
+        // УСЛУГИ
+        // ============================================================
+        function renderServices() {
+            var grid = document.getElementById('servicesGrid');
+            var cart = getCart();
+            if (!servicesData.length) {
+                grid.innerHTML = '<p style="text-align:center;color:#7a9a8e;padding:20px 0;">Услуги пока не добавлены.</p>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < servicesData.length; i++) {
+                var s = servicesData[i];
+                var inCart = cart.indexOf(s.id) !== -1;
+                var priceText = s.price ? s.price + ' ₽' :
+                    '<span style="background:#eaf5f0;padding:2px 12px;border-radius:20px;font-size:13px;">💰 Прайс скоро</span>';
+                var btnText = inCart ? '✅ В корзине' : '➕ Добавить';
+                var btnClass = inCart ? 'btn-add btn-added' : 'btn-add';
+                var disabled = inCart ? 'disabled' : '';
+                html += '<div class="service-card">' +
+                    '<span class="icon">' + s.icon + '</span>' +
+                    '<h3>' + s.name + '</h3>' +
+                    '<div class="desc">' + s.desc + '</div>' +
+                    '<div class="price">' + priceText + ' / ' + s.duration + '</div>' +
+                    '<button class="' + btnClass + '" data-id="' + s.id + '" ' + disabled + ' onclick="addToCart(' + s.id +
+                    ')">' + btnText + '</button>' +
+                    '</div>';
+            }
+            grid.innerHTML = html;
+        }
+
+        // ============================================================
+        // КОРЗИНА UI
+        // ============================================================
+        function updateCartUI() {
+            var items = getCartItems();
+            var container = document.getElementById('cartItems');
+            var totalContainer = document.getElementById('cartTotal');
+            if (items.length === 0) {
+                container.innerHTML =
+                    '<div class="cart-empty"><span class="icon">🛒</span><p>Корзина пуста</p><button class="btn" onclick="showPage(\'services\')" style="margin-top:10px;">Выбрать услуги</button></div>';
+                totalContainer.innerHTML = '';
+                updateCartCount();
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                html += '<div class="cart-item">' +
+                    '<div><h4>' + item.icon + ' ' + item.name + '</h4><p>' + item.duration + '</p></div>' +
+                    '<div style="display:flex;align-items:center;gap:8px;">' +
+                    '<span style="font-weight:700;color:#2d7a5a;">' + (item.price ? item.price + ' ₽' : '💰 Скоро') +
+                    '</span>' +
+                    '<button class="cart-item-remove" onclick="removeFromCart(' + item.id + ')">✕</button>' +
+                    '</div></div>';
+            }
+            container.innerHTML = html;
+            var total = getCartTotal();
+            totalContainer.innerHTML = '<div class="cart-total"><span>Итого:</span><span>' + (total ? total + ' ₽' :
+                    '💰 Прайсы скоро') + '</span></div>' +
+                '<button class="btn-order" onclick="placeOrder()">📩 Оформить заказ</button>';
+            updateCartCount();
+        }
+
+        // ============================================================
+        // ЗАКАЗ
+        // ============================================================
+        function generateOrderCode() {
+            orderCounter++;
+            localStorage.setItem('orderCounter', orderCounter.toString());
+            var now = new Date();
+            return 'MS-' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2,
+                '0') + '-' + String(orderCounter).padStart(3, '0');
+        }
+
+        function placeOrder() {
+            var items = getCartItems();
+            if (items.length === 0) { showToast('Корзина пуста!', 'error'); return; }
+            var isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) { showToast('⚠️ Войдите в профиль!', 'error');
+                showPage('profile'); return; }
+            var userName = localStorage.getItem('userName') || 'Гость';
+            var userEmail = localStorage.getItem('userEmail') || 'email@example.com';
+            var userPhone = localStorage.getItem('userPhone') || '+7 (999) 123-45-67';
+            var dateText = '';
+            if (selectedDate) {
+                var d = new Date(selectedDate);
+                dateText = '\n📅 Дата бронирования: ' + d.toLocaleDateString('ru-RU');
+                markDateOccupied(selectedDate);
+            }
+            currentOrderCode = generateOrderCode();
+            var orderList = '';
+            for (var i = 0; i < items.length; i++) {
+                orderList += '  ' + items[i].icon + ' ' + items[i].name + ' (' + items[i].duration + ')\n';
+            }
+            var total = getCartTotal();
+            currentOrderText = '📋 НОВЫЙ ЗАКАЗ\n🔑 Код: ' + currentOrderCode +
+                '\n\n👤 Клиент: ' + userName +
+                '\n📧 Email: ' + userEmail +
+                '\n📱 Телефон: ' + userPhone +
+                dateText +
+                '\n\n📦 Услуги:\n' + orderList +
+                '\n💳 Итог: ' + (total ? total + ' ₽' : '💰 Прайсы скоро') +
+                '\n\n📅 Дата заказа: ' + new Date().toLocaleString() +
+                '\n---\nМассажный салон';
+
+            var newOrder = { code: currentOrderCode, date: new Date().toLocaleString(), client: userName, email: userEmail,
+                phone: userPhone, items: orderList, total: total ? total + ' ₽' : '💰 Прайсы скоро',
+                bookingDate: selectedDate || 'Не указана' };
+            orders.push(newOrder);
+            saveOrders(orders);
+
+            document.getElementById('orderCode').textContent = currentOrderCode;
+            document.getElementById('orderText').textContent = currentOrderText;
+            document.getElementById('orderModal').classList.add('show');
+
+            selectedDate = null;
+            renderCalendar(currentMonth, currentYear);
+            document.getElementById('selectedDateDisplay').textContent = 'Выберите дату';
+            document.getElementById('bookBtn').style.display = 'none';
+
+            localStorage.setItem('massageCart', JSON.stringify([]));
+            updateCartUI();
+            updateCartCount();
+
+            sendOrderByEmail(currentOrderText, userEmail);
+            showToast('✅ Заказ оформлен! Код: ' + currentOrderCode, 'success');
+            if (isAdmin) renderAdminPanel();
+        }
+
+        function sendOrderByEmail(text, email) {
+            var overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('show');
+            fetch('https://formspree.io/f/xgveyayg', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        name: localStorage.getItem('userName') || 'Гость',
+                        email: email,
+                        phone: localStorage.getItem('userPhone') || '',
+                        order: text,
+                        _subject: '🆕 НОВЫЙ ЗАКАЗ в Массажном салоне!'
+                    })
+                })
+                .finally(function() { overlay.classList.remove('show'); });
+        }
+
+        // ============================================================
+        // МОДАЛКИ
+        // ============================================================
+        function closeModal() { document.getElementById('orderModal').classList.remove('show'); }
+
+        function copyOrder() {
+            var text = document.getElementById('orderText').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function() { showToast('📋 Скопировано!', 'success'); });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+                showToast('📋 Скопировано!', 'success');
+            }
+        }
+
+        function sendToTelegram() {
+            var text = document.getElementById('orderText').textContent;
+            window.open('https://t.me/share/url?url=' + encodeURIComponent(text) + '&text=' + encodeURIComponent(text),
+                '_blank');
+            showToast('📨 Открываем Telegram...', 'success');
+        }
+
+        function sendToEmail() {
+            var text = document.getElementById('orderText').textContent;
+            var subject = encodeURIComponent('🆕 Новый заказ в Массажном салоне!');
+            window.open('mailto:' + ADMIN_EMAIL + '?subject=' + subject + '&body=' + encodeURIComponent(text), '_blank');
+            showToast('📧 Открываем почту...', 'success');
+        }
+
+        function writeToAdmin() {
+            window.open('https://t.me/' + TELEGRAM_USERNAME.replace('@', ''), '_blank');
+            showToast('💬 Открываем Telegram...', 'success');
+        }
+
+        // ============================================================
+        // ПРОФИЛЬ
+        // ============================================================
+        function renderProfile() {
+            var container = document.getElementById('profileContent');
+            var isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                var name = localStorage.getItem('userName') || 'Имя';
+                var email = localStorage.getItem('userEmail') || 'email@example.com';
+                var phone = localStorage.getItem('userPhone') || '+7 (999) 123-45-67';
+                var adminButton = isAdmin ?
+                    '<button class="btn-small btn-admin" onclick="adminLogout()">🔒 Выйти из админки</button>' :
+                    '<button class="btn-small btn-admin" onclick="openAdminLogin()">🔐 Войти как администратор</button>';
+                container.innerHTML = '<div class="profile-container">' +
+                    '<span class="avatar">👩</span>' +
+                    '<h2>' + name + '</h2>' +
+                    '<div class="email">' + email + '</div>' +
+                    '<div class="profile-field"><span class="label">📱 Телефон</span><span class="value">' + phone +
+                    '</span></div>' +
+                    '<div class="profile-field"><span class="label">📦 Заказов</span><span class="value">' + orders.length +
+                    '</span></div>' +
+                    '<div class="profile-actions">' +
+                    '<button class="btn-small btn-edit" onclick="editProfile()">✏️ Редактировать</button>' +
+                    '<button class="btn-small btn-logout" onclick="logoutProfile()">🚪 Выйти</button>' +
+                    '</div>' +
+                    '<div style="margin-top:15px;border-top:1px solid #eee;padding-top:15px;">' + adminButton + '</div>' +
+                    '</div>';
+            } else {
+                container.innerHTML = '<div class="login-form">' +
+                    '<h3>Вход в профиль</h3>' +
+                    '<input type="text" id="loginName" placeholder="Имя" value="Анна">' +
+                    '<input type="email" id="loginEmail" placeholder="Email" value="anna@example.com">' +
+                    '<input type="tel" id="loginPhone" placeholder="Телефон" value="+7 (999) 123-45-67">' +
+                    '<button class="btn" onclick="loginProfile()">Войти</button>' +
+                    '<div class="register-link"><a href="#" onclick="showToast(\'Свяжитесь с нами!\', \'success\')">Зарегистрироваться</a></div>' +
+                    '</div>';
+            }
+        }
+
+        function loginProfile() {
+            var n = document.getElementById('loginName').value.trim();
+            var e = document.getElementById('loginEmail').value.trim();
+            var p = document.getElementById('loginPhone').value.trim();
+            if (!n || !e || !p) { showToast('Заполните все поля!', 'error'); return; }
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', n);
+            localStorage.setItem('userEmail', e);
+            localStorage.setItem('userPhone', p);
+            renderProfile();
+            showToast('✅ Добро пожаловать, ' + n + '!', 'success');
+        }
+
+        function logoutProfile() {
+            localStorage.setItem('isLoggedIn', 'false');
+            renderProfile();
+            showToast('🚪 Вы вышли', 'error');
+        }
+
+        function editProfile() {
+            var n = prompt('Новое имя:', localStorage.getItem('userName') || '');
+            var e = prompt('Новый email:', localStorage.getItem('userEmail') || '');
+            var p = prompt('Новый телефон:', localStorage.getItem('userPhone') || '');
+            if (n) localStorage.setItem('userName', n);
+            if (e) localStorage.setItem('userEmail', e);
+            if (p) localStorage.setItem('userPhone', p);
+            renderProfile();
+            showToast('✅ Профиль обновлён!', 'success');
+        }
+
+        // ============================================================
+        // АДМИН
+        // ============================================================
+        function openAdminLogin() {
+            document.getElementById('adminLoginModal').classList.add('show');
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('adminPasswordInput').focus();
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminLoginModal').classList.remove('show');
+            document.getElementById('adminPasswordInput').value = '';
+        }
+
+        function adminLogin() {
+            var pass = document.getElementById('adminPasswordInput').value;
+            if (pass === ADMIN_PASSWORD) {
+                localStorage.setItem('isAdmin', 'true');
+                isAdmin = true;
+                document.getElementById('adminLoginModal').classList.remove('show');
+                renderProfile();
+                showToast('✅ Добро пожаловать в админ-панель!', 'success');
+                var adminLink = document.getElementById('adminNavLink');
+                if (adminLink) adminLink.style.display = 'block';
+                showPage('admin');
+                document.getElementById('adminPasswordInput').value = '';
+            } else {
+                showToast('❌ Неверный пароль!', 'error');
+                document.getElementById('adminPasswordInput').value = '';
+                document.getElementById('adminPasswordInput').focus();
+            }
+        }
+
+        function adminLogout() {
+            localStorage.setItem('isAdmin', 'false');
+            isAdmin = false;
+            var adminLink = document.getElementById('adminNavLink');
+            if (adminLink) adminLink.style.display = 'none';
+            renderProfile();
+            showToast('🚪 Вы вышли из админки', 'error');
+            showPage('profile');
+        }
+
+        function renderAdminPanel() {
+            if (!isAdmin) {
+                document.getElementById('page-admin').innerHTML =
+                    '<h2 class="page-title">⛔ Доступ запрещён</h2><p class="page-subtitle">Войдите как администратор на странице профиля.</p>';
+                return;
+            }
+            renderAdminServicesTable();
+            renderAdminOrders();
+            document.getElementById('adminOccupiedCount').textContent = getOccupiedDates().length;
+        }
+
+        function renderAdminServicesTable() {
+            var tbody = document.getElementById('adminServicesBody');
+            if (!servicesData.length) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#7a9a8e;">Услуг пока нет</td></tr>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < servicesData.length; i++) {
+                var s = servicesData[i];
+                html += '<tr><td><strong>' + s.name + '</strong></td><td>' + (s.price ? s.price + ' ₽' : '—') +
+                    '</td><td><button class="btn btn-danger" onclick="deleteService(' + s.id +
+                    ')" style="padding:4px 10px;font-size:11px;min-height:30px;">Удалить</button></td></tr>';
+            }
+            tbody.innerHTML = html;
+        }
+
+        function addService() {
+            var name = document.getElementById('adminServiceName').value.trim();
+            var icon = document.getElementById('adminServiceIcon').value.trim() || '💆';
+            var duration = document.getElementById('adminServiceDuration').value.trim() || '60 мин';
+            var price = parseFloat(document.getElementById('adminServicePrice').value);
+            var desc = document.getElementById('adminServiceDesc').value.trim() || '';
+            if (!name) { showToast('Введите название услуги!', 'error'); return; }
+            var newService = { id: nextId++, icon: icon, name: name, desc: desc, price: isNaN(price) ? null : price,
+                duration: duration };
+            servicesData.push(newService);
+            saveServices(servicesData);
+            renderAdminServicesTable();
+            renderServices();
+            document.getElementById('adminServiceName').value = '';
+            document.getElementById('adminServiceIcon').value = '';
+            document.getElementById('adminServiceDuration').value = '';
+            document.getElementById('adminServicePrice').value = '';
+            document.getElementById('adminServiceDesc').value = '';
+            showToast('✅ Услуга добавлена!', 'success');
+        }
+
+        function deleteService(id) {
+            if (confirm('Удалить услугу?')) {
+                servicesData = servicesData.filter(function(s) { return s.id !== id; });
+                saveServices(servicesData);
+                renderAdminServicesTable();
+                renderServices();
+                showToast('🗑️ Услуга удалена', 'error');
+            }
+        }
+
+        function renderAdminOrders() {
+            var container = document.getElementById('adminOrdersList');
+            var ordersList = loadOrders();
+            if (!ordersList.length) { container.innerHTML = '<p style="color:#7a9a8e;">Заказов пока нет</p>'; return; }
+            var html = '';
+            for (var i = ordersList.length - 1; i >= 0; i--) {
+                var o = ordersList[i];
+                html += '<div class="order-item"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;"><span>🔑 ' +
+                    o.code + '</span><span>👤 ' + o.client + '</span><span>📅 ' + o.date +
+                    '</span></div><div style="font-size:13px;color:#5a7a6e;margin-top:4px;">📧 ' + o.email + ' · 📱 ' + o
+                    .phone + (o.bookingDate && o.bookingDate !== 'Не указана' ? ' · 📅 Бронь: ' + o.bookingDate : '') +
+                    '</div></div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function clearDates() {
+            if (confirm('Очистить все занятые даты?')) {
+                saveOccupiedDates([]);
+                renderAdminPanel();
+                renderCalendar(currentMonth, currentYear);
+                showToast('🗑️ Все даты очищены!', 'success');
+            }
+        }
+
+        // ============================================================
+        // КАЛЕНДАРЬ
+        // ============================================================
+        function renderCalendar(month, year) {
+            var grid = document.getElementById('calendarGrid');
+            var monthYear = document.getElementById('monthYear');
+            var months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь',
+                'Декабрь'
+            ];
+            monthYear.textContent = months[month] + ' ' + year;
+            var firstDay = new Date(year, month, 1).getDay();
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+            var today = new Date();
+            var html = '';
+            var dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            for (var i = 0; i < dayNames.length; i++) {
+                html += '<div class="day-name">' + dayNames[i] + '</div>';
+            }
+            var start = (firstDay === 0) ? 6 : firstDay - 1;
+            for (var i = 0; i < start; i++) html += '<div class="day empty"></div>';
+            for (var d = 1; d <= daysInMonth; d++) {
+                var dateObj = new Date(year, month, d);
+                var dateStr = dateObj.toISOString().split('T')[0];
+                var isOccupied = isDateOccupied(dateStr);
+                var isSelected = (selectedDate === dateStr);
+                var isPast = dateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                var cls = 'day';
+                var click = '';
+                if (isSelected) { cls += ' selected';
+                    click = 'onclick="selectDate(\'' + dateStr + '\')"'; } else if (isOccupied) { cls += ' occupied'; } else if (
+                    !isPast) { cls += ' free';
+                    click = 'onclick="selectDate(\'' + dateStr + '\')"'; } else { cls += ' empty'; }
+                html += '<div class="' + cls + '" ' + click + '>' + d + '</div>';
+            }
+            grid.innerHTML = html;
+            if (selectedDate && !isDateOccupied(selectedDate)) {
+                var d = new Date(selectedDate);
+                document.getElementById('selectedDateDisplay').textContent = '📅 Выбрана дата: ' + d.toLocaleDateString(
+                'ru-RU');
+                document.getElementById('bookBtn').style.display = 'inline-block';
+            } else if (selectedDate && isDateOccupied(selectedDate)) {
+                selectedDate = null;
+                document.getElementById('selectedDateDisplay').textContent = 'Выберите дату';
+                document.getElementById('bookBtn').style.display = 'none';
+                renderCalendar(currentMonth, currentYear);
+            } else {
+                document.getElementById('selectedDateDisplay').textContent = 'Выберите дату';
+                document.getElementById('bookBtn').style.display = 'none';
+            }
+        }
+
+        function selectDate(dateStr) {
+            if (isDateOccupied(dateStr)) { showToast('❌ День занят!', 'error'); return; }
+            selectedDate = dateStr;
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth > 11) { currentMonth = 0;
+                currentYear++; } else if (currentMonth < 0) { currentMonth = 11;
+                currentYear--; }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function bookSelectedDate() {
+            if (!selectedDate) { showToast('Выберите дату!', 'error'); return; }
+            if (isDateOccupied(selectedDate)) { showToast('❌ День занят!', 'error'); return; }
+            if (getCartItems().length === 0) { showToast('Добавьте услуги в корзину!', 'error');
+                showPage('services'); return; }
+            placeOrder();
+        }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(msg, type) {
+            type = type || 'success';
+            var old = document.querySelector('.toast');
+            if (old) old.remove();
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        }
+
+        // ============================================================
+        // АССИСТЕНТ
+        // ============================================================
+        var assistantKnowledge = {
+            'выбрать': ['🧘 Для расслабления лучше всего подходит классический массаж.'],
+            'противопоказания': ['⚠️ Противопоказания: температура, воспаления, кожные болезни.'],
+            'часто': ['📅 Для релаксации — 1 раз в неделю.'],
+            'классический': ['🤔 Классический массаж — мягкий, подходит всем.'],
+            'польза': ['💚 Польза: улучшение кровообращения, снятие стресса.'],
+            'привет': ['Привет! 👋 Я консультант по массажу.']
+        };
+
+        function getBotResponse(msg) {
+            var clean = msg.toLowerCase();
+            for (var key in assistantKnowledge) {
+                if (clean.indexOf(key) !== -1) return assistantKnowledge[key][0];
+            }
+            return '🤔 Задайте вопрос: про выбор массажа, противопоказания или частоту.';
+        }
+
+        function sendAssistantMsg() {
+            var input = document.getElementById('assistantInput');
+            var text = input.value.trim();
+            if (!text) return;
+            var container = document.getElementById('assistantMessages');
+            var time = new Date().toTimeString().slice(0, 5);
+            var userMsg = document.createElement('div');
+            userMsg.style.cssText =
+                'background:#2d7a5a;color:white;padding:10px 14px;border-radius:12px;margin-bottom:8px;font-size:14px;max-width:85%;margin-left:auto;';
+            userMsg.innerHTML = text + '<div style="font-size:9px;opacity:0.6;margin-top:3px;">' + time + '</div>';
+            container.appendChild(userMsg);
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+            setTimeout(function() {
+                var response = getBotResponse(text);
+                var botMsg = document.createElement('div');
+                botMsg.style.cssText =
+                    'background:white;padding:10px 14px;border-radius:12px;margin-bottom:8px;font-size:14px;color:#2d4a3e;max-width:85%;';
+                botMsg.innerHTML = response.replace(/\n/g, '<br>') + '<div style="font-size:9px;color:#9ab8ac;margin-top:3px;">' +
+                    time + '</div>';
+                container.appendChild(botMsg);
+                container.scrollTop = container.scrollHeight;
+            }, 300);
+        }
+
+        function sendQuickMsg(text) {
+            document.getElementById('assistantInput').value = text;
+            sendAssistantMsg();
+        }
+
+        function toggleAssistant() {
+            document.getElementById('assistantModal').classList.toggle('show');
+        }
+
+        function closeAssistant() {
+            document.getElementById('assistantModal').classList.remove('show');
+        }
+
+        // ============================================================
+        // ЗАПУСК
+        // ============================================================
+        function init() {
+            if (!localStorage.getItem('occupiedDates')) {
+                var today = new Date();
+                var dates = [];
+                for (var i = 1; i <= 4; i++) {
+                    var d = new Date(today);
+                    d.setDate(d.getDate() + i);
+                    if (d.getDay() !== 0 && d.getDay() !== 6) dates.push(d.toISOString().split('T')[0]);
+                }
+                saveOccupiedDates(dates);
+            }
+
+            renderServices();
+            updateCartUI();
+            renderProfile();
+            updateCartCount();
+            renderCalendar(currentMonth, currentYear);
+
+            var adminLink = document.getElementById('adminNavLink');
+            if (adminLink) {
+                adminLink.style.display = isAdmin ? 'block' : 'none';
+            }
+
+            document.addEventListener('click', function(e) {
+                var menu = document.getElementById('navLinks');
+                var burger = document.querySelector('.burger');
+                if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) {
+                    menu.classList.remove('open');
+                }
+            });
+
+            document.getElementById('adminPasswordInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    adminLogin();
+                }
+            });
+
+            document.getElementById('assistantInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    sendAssistantMsg();
+                }
+            });
+
+            console.log('🌿 Сайт загружен! Пароль админа: ' + ADMIN_PASSWORD);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
